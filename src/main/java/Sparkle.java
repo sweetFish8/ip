@@ -76,6 +76,14 @@ public class Sparkle {
         "QQQQQQQQQQNWAJtxsIfxtttxlxJttJxLvttv|vvvvvvvvvvvvv||vtl7vvvvv|vJfT||vvv||||||||||vvvvvvvvvvvvv|vvvvvvvvvvvv|iltxfFYJttttJttttJJxIlTvTtTLvTAgNQQQQQQQQQ\n"+
         "QQQQQQQQQQQNg888RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR8RRR8RRRRRRRRRRRRRR8RR8RRR8RgQQQQQQQQQQQ";
     
-        System.out.println("Hello from\n" + logo);
+        System.out.println("Hey hey, I'm Sparkle!\n" + logo);
+        System.out.println("_____________________________"+
+        "_______________________________\n" +
+        " Got any cool, daring quests or risky biz? Just hit me up!\n" +
+        "_________________________________"+
+        "___________________________\n" +
+        " See you around, Stelle~ Try to stay out of trouble, especially... the next time we meet!\n" +
+        "_________________________________"+
+        "___________________________\n");
     }
 }
