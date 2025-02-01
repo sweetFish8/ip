@@ -1,5 +1,9 @@
+import java.util.Scanner;
+
 public class Sparkle {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         String logo = "QQQQQQQQQQQQQQNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNQQQQQQQQQQQQQQ\n"+
         "QQQQQQQQQQNR5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2222222222222222222222222222222248NQQQQQQQQQQ\n"+
         "QQQQQQQQNMMwLviiL7TTTT7777cLuozC3CCnjjjuCeAAyt|Lyyeeoe33y4vrrrrrrrrrrrrrrrrrrrr|tvv7t|rrrrrrrrrrrr||vvLTtFSCzeoeyUmm9aCFzzzjjuCC3yyyyyeyIvSMMNQQQQQQQQ\n"+
@@ -76,14 +80,33 @@ public class Sparkle {
         "QQQQQQQQQQNWAJtxsIfxtttxlxJttJxLvttv|vvvvvvvvvvvvv||vtl7vvvvv|vJfT||vvv||||||||||vvvvvvvvvvvvv|vvvvvvvvvvvv|iltxfFYJttttJttttJJxIlTvTtTLvTAgNQQQQQQQQQ\n"+
         "QQQQQQQQQQQNg888RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR8RRR8RRRRRRRRRRRRRR8RR8RRR8RgQQQQQQQQQQQ";
     
-        System.out.println("Hey hey, I'm Sparkle!\n" + logo);
-        System.out.println("_____________________________"+
+        System.out.println("    _____________________________"+
+        "_______________________________\n" + "    Hey hey, I'm Sparkle!\n" + "    _____________________________"+
+        "_______________________________\n" + "\n" + logo);
+
+        System.out.println("    _____________________________"+
         "_______________________________\n" +
-        " Got any cool, daring quests or risky biz? Just hit me up!\n" +
-        "_________________________________"+
+        "    Got any cool, daring quests or risky biz? Just hit me up!\n"+
+        "    _____________________________"+
+        "_______________________________\n");
+
+        String userInput = scanner.nextLine();
+        while(!userInput.equalsIgnoreCase("bye")){
+            System.out.println("    _________________________________"+
+                    "___________________________\n"+
+                    "     "+
+                    userInput+  "~" +
+                    "\n"+
+                    "    _________________________________"+
+                    "___________________________\n");
+            userInput = scanner.nextLine();
+        }
+        
+        System.out.println("     _________________________________"+
         "___________________________\n" +
-        " See you around, Stelle~ Try to stay out of trouble, especially... the next time we meet!\n" +
-        "_________________________________"+
+        "    See you around, Stelle~ Try to stay out of trouble, especially... the next time we meet!\n" +
+        "    _________________________________"+
         "___________________________\n");
+        scanner.close();
     }
 }
