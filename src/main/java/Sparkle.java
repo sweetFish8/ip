@@ -172,95 +172,103 @@ public class Sparkle {
     Task[] tasks = new Task[100];
     int taskCount = 0;
 
-    String userInput = scanner.nextLine();
-    while (!userInput.equalsIgnoreCase("bye")) {
-      if (userInput.equalsIgnoreCase("list")) {
-        System.out.println(
-            "    _________________________________" + "___________________________\n");
-        if (taskCount == 0) {
-          System.out.println("     Looks like there's nothing fun to mess with... How boring!");
-        } else {
-          for (int i = 0; i < taskCount; i++) {
-            System.out.println(
-                "     "
-                    + (i + 1)
-                    + ". ["
-                    + tasks[i].getStatusIcon()
-                    + "] "
-                    + tasks[i].description
-                    + "~♪");
-          }
-        }
-        System.out.println(
-            "    _________________________________" + "___________________________\n");
-      } else if (userInput.startsWith("mark")) {
-        int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
-        if (taskNumber >= 0 && taskNumber < taskCount) {
-          tasks[taskNumber].markAsDone();
-          System.out.println(
-              "    _____________________________"
-                  + "_______________________________\n"
-                  + "     Boom! Task's done and dusted~\n"
-                  + "       ["
-                  + tasks[taskNumber].getStatusIcon()
-                  + "] "
-                  + tasks[taskNumber].description
-                  + "\n"
-                  + "    _____________________________"
-                  + "_______________________________\n");
-        } else {
-          System.out.println(
-              "    _____________________________"
-                  + "_______________________________\n"
-                  + "     That task number's playing hide and seek—try again!.\n"
-                  + "    _____________________________"
-                  + "_______________________________\n");
-        }
-      } else if (userInput.startsWith("unmark")) {
-        int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
-        if (taskNumber >= 0 && taskNumber < taskCount) {
-          tasks[taskNumber].markAsUndone();
-          System.out.println(
-              "    _____________________________"
-                  + "_______________________________\n"
-                  + "     Oops! Not done yet, but it's still on the radar!\n"
-                  + "       ["
-                  + tasks[taskNumber].getStatusIcon()
-                  + "] "
-                  + tasks[taskNumber].description
-                  + "\n"
-                  + "    _____________________________"
-                  + "_______________________________\n");
-        } else {
-          System.out.println(
-              "    _____________________________"
-                  + "_______________________________\n"
-                  + "     That task number's playing hide and seek—try again!\n"
-                  + "    _____________________________"
-                  + "_______________________________\n");
-        }
-      } else {
-        // Add the task if it's not "list"
-        tasks[taskCount] = new Task(userInput);
-        taskCount++;
-        System.out.println(
-            "    _____________________________"
-                + "_______________________________\n"
-                + "     added: "
-                + userInput
-                + "! Let\'s make it fun~"
-                + "\n"
-                + "    _____________________________"
-                + "_______________________________\n");
+    while (true) {
+      String userInput = scanner.nextLine().trim();
+      if (userInput.equalsIgnoreCase("bye")) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
+        System.out.println("    ____________________________________________________________");
+        break;
       }
-      userInput = scanner.nextLine();
+
+      if (userInput.equalsIgnoreCase("list")) {
+        printTaskList(tasks, taskCount);
+      } else if (userInput.startsWith("mark")) {
+        handleMarkTask(tasks, taskCount, userInput, true);
+      } else if (userInput.startsWith("unmark")) {
+        handleMarkTask(tasks, taskCount, userInput, false);
+      } else if (userInput.startsWith("todo")) {
+        String description = userInput.substring(5).trim();
+        tasks[taskCount] = new Todo(description);
+        printAddedTask(tasks[taskCount++], taskCount);
+      } else if (userInput.startsWith("deadline")) {
+        String[] parts = userInput.substring(9).split(" /by ", 2);
+        if (parts.length < 2) {
+          printInvalidCommandMessage();
+          continue;
+        }
+        tasks[taskCount] = new Deadline(parts[0].trim(), parts[1].trim());
+        printAddedTask(tasks[taskCount++], taskCount);
+      } else if (userInput.startsWith("event")) {
+        String[] parts = userInput.substring(6).split(" /from ", 2);
+        if (parts.length < 2 || !parts[1].contains(" /to ")) {
+          printInvalidCommandMessage();
+          continue;
+        }
+        String[] timeParts = parts[1].split(" /to ", 2);
+        tasks[taskCount] = new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
+        printAddedTask(tasks[taskCount++], taskCount);
+      } else {
+        printInvalidCommandMessage();
+      }
     }
 
-    System.out.println(
-        "     ____________________________________________________________\n"
-            + "    See you around, Stelle~ Try to stay out of trouble, especially... the next time"
-            + " we meet!\n"
-            + "    ____________________________________________________________\n");
     scanner.close();
+  }
+
+  private static void printTaskList(Task[] tasks, int taskCount) {
+    System.out.println("    ____________________________________________________________");
+    if (taskCount == 0) {
+      System.out.println("    Looks like there's nothing fun to mess with... How boring!");
+    } else {
+      System.out.println("    Here are the tasks in your list:");
+      for (int i = 0; i < taskCount; i++) {
+        System.out.println("    " + (i + 1) + ". " + tasks[i]);
+      }
+    }
+    System.out.println("    ____________________________________________________________");
+  }
+
+  private static void handleMarkTask(
+      Task[] tasks, int taskCount, String userInput, boolean isMark) {
+    try {
+      int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
+      if (taskNumber >= 0 && taskNumber < taskCount) {
+        if (isMark) {
+          tasks[taskNumber].markAsDone();
+          System.out.println("    ____________________________________________________________");
+          System.out.println("    Boom! Task's done and dusted~");
+        } else {
+          tasks[taskNumber].markAsUndone();
+          System.out.println("    ____________________________________________________________");
+          System.out.println("    Not done yet, but it's still on the radar!");
+        }
+        System.out.println("    " + tasks[taskNumber]);
+        System.out.println("    ____________________________________________________________");
+      } else {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    That task number's playing hide and seek—try again!");
+        System.out.println("    ____________________________________________________________");
+      }
+    } catch (Exception e) {
+      System.out.println("    ____________________________________________________________");
+      System.out.println("    Whoops! That's not a valid input~ Try again!");
+      System.out.println("    ____________________________________________________________");
+    }
+  }
+
+  private static void printAddedTask(Task task, int taskCount) {
+    System.out.println("    ____________________________________________________________");
+    System.out.println("    Let's make it fun! I've added this task:");
+    System.out.println("      " + task);
+    System.out.println(
+        "    Looks like you've got " + taskCount + " tasks in your list~ Better get moving!");
+    System.out.println("    ____________________________________________________________");
+  }
+
+  private static void printInvalidCommandMessage() {
+    System.out.println("    ____________________________________________________________");
+    System.out.println("    Whoops! That's not a valid input~ Try again!");
+    System.out.println("    ____________________________________________________________");
   }
 }
