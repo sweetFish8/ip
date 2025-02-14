@@ -63,7 +63,7 @@ public class Sparkle {
         case "bye":
           System.out.print(separator);
           System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
-          System.out.print(separator);
+          System.out.println(separator);
           scanner.close();
           return;
 
@@ -72,8 +72,11 @@ public class Sparkle {
           break;
 
         case "mark":
+          handleMarkTask(tasks, taskCount, details, true);
+          break;
+
         case "unmark":
-          handleMarkTask(tasks, taskCount, details, command.equals("mark"));
+          handleMarkTask(tasks, taskCount, details, false);
           break;
 
         case "todo":
@@ -118,39 +121,39 @@ public class Sparkle {
     if (taskCount == 0) {
       System.out.println("    Looks like there's nothing fun to mess with... How boring!");
     } else {
-      System.out.println("    Here are the tasks in your list:");
+      System.out.println("    Here are the tasks in your list~ ");
       for (int i = 0; i < taskCount; i++) {
         System.out.println("    " + (i + 1) + ". " + tasks[i]);
       }
     }
-    System.out.print(separator);
+    System.out.println(separator);
   }
 
-  private static void handleMarkTask(
-      Task[] tasks, int taskCount, String userInput, boolean isMark) {
+  private static void handleMarkTask(Task[] tasks, int taskCount, String input, boolean isMark) {
+    Integer taskIndex = parseTaskIndex(input, taskCount);
+    if (taskIndex == null) {
+      printInvalidCommandMessage();
+      return;
+    }
+
+    Task task = tasks[taskIndex];
+    if (isMark) {
+      task.markAsDone();
+      System.out.println(separator + "    Boom! Task's done and dusted~");
+    } else {
+      task.markAsUndone();
+      System.out.println(separator + "    Not done yet, but it's still on the radar!");
+    }
+    System.out.println("    " + task);
+    System.out.println(separator);
+  }
+
+  private static Integer parseTaskIndex(String input, int size) {
     try {
-      int taskNumber = Integer.parseInt(userInput.split(" ")[1]) - 1;
-      if (taskNumber >= 0 && taskNumber < taskCount) {
-        if (isMark) {
-          tasks[taskNumber].markAsDone();
-          System.out.print(separator);
-          System.out.println("    Boom! Task's done and dusted~");
-        } else {
-          tasks[taskNumber].markAsUndone();
-          System.out.print(separator);
-          System.out.println("    Not done yet, but it's still on the radar!");
-        }
-        System.out.println("    " + tasks[taskNumber]);
-        System.out.print(separator);
-      } else {
-        System.out.print(separator);
-        System.out.println("    That task number's playing hide and seek—try again!");
-        System.out.print(separator);
-      }
-    } catch (Exception e) {
-      System.out.print(separator);
-      System.out.println("    Whoops! That's not a valid input~ Try again!");
-      System.out.print(separator);
+      int taskNumber = Integer.parseInt(input) - 1;
+      return (taskNumber >= 0 && taskNumber < size) ? taskNumber : null;
+    } catch (NumberFormatException e) {
+      return null;
     }
   }
 
@@ -160,12 +163,12 @@ public class Sparkle {
     System.out.println("      " + task);
     System.out.println(
         "    Looks like you've got " + taskCount + " tasks in your list~ Better get moving!");
-    System.out.print(separator);
+    System.out.println(separator);
   }
 
   private static void printInvalidCommandMessage() {
     System.out.print(separator);
     System.out.println("    Whoops! That's not a valid input~ Try again!");
-    System.out.print(separator);
+    System.out.println(separator);
   }
 }
