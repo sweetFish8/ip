@@ -17,9 +17,9 @@ public class SparkleException extends Exception {
     switch (type) {
       case EMPTY_TASK_DESCRIPTION:
         return details
-            + " Nothing in the description! At least give me some fireworks to set off...";
+            + " has nothing in the description!\n    At least give me some fireworks to set off...";
       case UNKNOWN_COMMAND:
-        return details + "? Huh? That's just noise! Say something that actually makes sense~";
+        return details + "? Huh? That's just noise!\n    Say something that actually makes sense~";
       case INVALID_TASK_NUMBER:
         return "That task number's playing hide and seek~ Try again!";
       case INVALID_FORMAT:
