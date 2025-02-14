@@ -1,0 +1,7 @@
+todo Buy milk
+deadline Submit assignment /by 2025-02-20
+event Project meeting /from 2pm /to 4pm
+list
+mark 2
+unmark 2
+bye
