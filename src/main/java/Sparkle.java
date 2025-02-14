@@ -54,64 +54,62 @@ public class Sparkle {
     int taskCount = 0;
 
     while (true) {
-      String userInput = scanner.nextLine().trim();
-      String[] commandParts = userInput.split(" ", 2);
-      String command = commandParts[0].toLowerCase();
-      String details = commandParts.length > 1 ? commandParts[1].trim() : "";
+      try {
+        String userInput = scanner.nextLine().trim();
+        String[] commandParts = userInput.split(" ", 2);
+        String command = commandParts[0].toLowerCase();
+        String details = commandParts.length > 1 ? commandParts[1].trim() : "";
 
-      switch (command) {
-        case "bye":
-          System.out.print(separator);
-          System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
-          System.out.println(separator);
-          scanner.close();
-          return;
+        switch (command) {
+          case "bye":
+            System.out.print(separator);
+            System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
+            System.out.println(separator);
+            scanner.close();
+            return;
 
-        case "list":
-          printTaskList(tasks, taskCount);
-          break;
+          case "list":
+            printTaskList(tasks, taskCount);
+            break;
 
-        case "mark":
-          handleMarkTask(tasks, taskCount, details, true);
-          break;
+          case "mark":
+          case "unmark":
+            handleMarkTask(tasks, taskCount, details, command.equals("mark"));
+            break;
 
-        case "unmark":
-          handleMarkTask(tasks, taskCount, details, false);
-          break;
-
-        case "todo":
-          if (details.isEmpty()) {
-            printInvalidCommandMessage();
-          } else {
+          case "todo":
+            if (details.isEmpty())
+              throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
             tasks[taskCount] = new Todo(details);
             printAddedTask(tasks[taskCount++], taskCount);
-          }
-          break;
+            break;
 
-        case "deadline":
-          String[] deadlineParts = details.split(" /by ", 2);
-          if (deadlineParts.length < 2) {
-            printInvalidCommandMessage();
-          } else {
+          case "deadline":
+            String[] deadlineParts = details.split(" /by ", 2);
+            if (deadlineParts.length < 2)
+              throw new SparkleException(
+                  SparkleException.ErrorType.INVALID_FORMAT, "Deadline requires a /by time.");
             tasks[taskCount] = new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim());
             printAddedTask(tasks[taskCount++], taskCount);
-          }
-          break;
+            break;
 
-        case "event":
-          String[] eventParts = details.split(" /from ", 2);
-          if (eventParts.length < 2 || !eventParts[1].contains(" /to ")) {
-            printInvalidCommandMessage();
-          } else {
+          case "event":
+            String[] eventParts = details.split(" /from ", 2);
+            if (eventParts.length < 2 || !eventParts[1].contains(" /to ")) {
+              throw new SparkleException(
+                  SparkleException.ErrorType.INVALID_FORMAT, "Event requires /from and /to time.");
+            }
             String[] timeParts = eventParts[1].split(" /to ", 2);
             tasks[taskCount] =
                 new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
             printAddedTask(tasks[taskCount++], taskCount);
-          }
-          break;
+            break;
 
-        default:
-          printInvalidCommandMessage();
+          default:
+            throw new SparkleException(SparkleException.ErrorType.UNKNOWN_COMMAND, command);
+        }
+      } catch (SparkleException e) {
+        printErrorMessage(e.getMessage());
       }
     }
   }
@@ -129,23 +127,27 @@ public class Sparkle {
     System.out.println(separator);
   }
 
-  private static void handleMarkTask(Task[] tasks, int taskCount, String input, boolean isMark) {
-    Integer taskIndex = parseTaskIndex(input, taskCount);
-    if (taskIndex == null) {
-      printInvalidCommandMessage();
-      return;
+  private static void handleMarkTask(Task[] tasks, int taskCount, String userInput, boolean isMark)
+      throws SparkleException {
+    try {
+      int taskNumber = Integer.parseInt(userInput) - 1;
+      if (taskNumber < 0 || taskNumber >= taskCount) {
+        throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
+      }
+      if (isMark) {
+        tasks[taskNumber].markAsDone();
+        System.out.print(separator);
+        System.out.println("    Boom! Task's done and dusted~");
+      } else {
+        tasks[taskNumber].markAsUndone();
+        System.out.print(separator);
+        System.out.println("    Not done yet, but it's still on the radar!");
+      }
+      System.out.println("    " + tasks[taskNumber]);
+      System.out.print(separator);
+    } catch (NumberFormatException e) {
+      throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
     }
-
-    Task task = tasks[taskIndex];
-    if (isMark) {
-      task.markAsDone();
-      System.out.println(separator + "    Boom! Task's done and dusted~");
-    } else {
-      task.markAsUndone();
-      System.out.println(separator + "    Not done yet, but it's still on the radar!");
-    }
-    System.out.println("    " + task);
-    System.out.println(separator);
   }
 
   private static Integer parseTaskIndex(String input, int size) {
@@ -166,9 +168,9 @@ public class Sparkle {
     System.out.println(separator);
   }
 
-  private static void printInvalidCommandMessage() {
+  private static void printErrorMessage(String message) {
     System.out.print(separator);
-    System.out.println("    Whoops! That's not a valid input~ Try again!");
+    System.out.println("    Whoops! " + message);
     System.out.println(separator);
   }
 }
