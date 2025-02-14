@@ -1,4 +1,11 @@
+package sparkle.core;
+
 import java.util.Scanner;
+import sparkle.exception.SparkleException;
+import sparkle.task.Deadline;
+import sparkle.task.Event;
+import sparkle.task.Task;
+import sparkle.task.Todo;
 
 public class Sparkle {
 
@@ -144,18 +151,9 @@ public class Sparkle {
         System.out.println("    Not done yet, but it's still on the radar!");
       }
       System.out.println("    " + tasks[taskNumber]);
-      System.out.print(separator);
+      System.out.println(separator);
     } catch (NumberFormatException e) {
       throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
-    }
-  }
-
-  private static Integer parseTaskIndex(String input, int size) {
-    try {
-      int taskNumber = Integer.parseInt(input) - 1;
-      return (taskNumber >= 0 && taskNumber < size) ? taskNumber : null;
-    } catch (NumberFormatException e) {
-      return null;
     }
   }
 

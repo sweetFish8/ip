@@ -1,4 +1,6 @@
-class SparkleException extends Exception {
+package sparkle.exception;
+
+public class SparkleException extends Exception {
 
   public enum ErrorType {
     EMPTY_TASK_DESCRIPTION,
