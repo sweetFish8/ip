@@ -1,7 +1,15 @@
-todo Buy milk
+todo Buy groceries
 deadline Submit assignment /by 2025-02-20
-event Project meeting /from 2pm /to 4pm
+todo
+event Meeting /from 2025-02-15 10:00 /to 2025-02-15 12:00
+event Movie /from 2025-02-18 15:00
 list
+mark 1
 mark 2
-unmark 2
+mark 10
+list
+unmark 1
+list
+add something
+list
 bye

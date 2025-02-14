@@ -44,7 +44,7 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
 
     ____________________________________________________________
     Let's make it fun! I've added this task:
-      [T][ ] Buy milk
+      [T][ ] Buy groceries
     Looks like you've got 1 tasks in your list~ Better get moving!
     ____________________________________________________________
 
@@ -55,16 +55,29 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     ____________________________________________________________
 
     ____________________________________________________________
+    Whoops! Todo Nothing in the description! At least give me some fireworks to set off...
+    ____________________________________________________________
+
+    ____________________________________________________________
     Let's make it fun! I've added this task:
-      [E][ ] Project meeting (from: 2pm to: 4pm)
+      [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
     Looks like you've got 3 tasks in your list~ Better get moving!
     ____________________________________________________________
 
     ____________________________________________________________
+    Whoops! Event requires /from and /to time.
+    ____________________________________________________________
+
+    ____________________________________________________________
     Here are the tasks in your list~ 
-    1. [T][ ] Buy milk
+    1. [T][ ] Buy groceries
     2. [D][ ] Submit assignment (by: 2025-02-20)
-    3. [E][ ] Project meeting (from: 2pm to: 4pm)
+    3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Boom! Task's done and dusted~
+    [T][X] Buy groceries
     ____________________________________________________________
 
     ____________________________________________________________
@@ -73,8 +86,37 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     ____________________________________________________________
 
     ____________________________________________________________
+    Whoops! That task number's playing hide and seek~ Try again!
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Here are the tasks in your list~ 
+    1. [T][X] Buy groceries
+    2. [D][X] Submit assignment (by: 2025-02-20)
+    3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
+    ____________________________________________________________
+
+    ____________________________________________________________
     Not done yet, but it's still on the radar!
-    [D][ ] Submit assignment (by: 2025-02-20)
+    [T][ ] Buy groceries
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Here are the tasks in your list~ 
+    1. [T][ ] Buy groceries
+    2. [D][X] Submit assignment (by: 2025-02-20)
+    3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Whoops! add? Huh? That's just noise! Say something that actually makes sense~
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Here are the tasks in your list~ 
+    1. [T][ ] Buy groceries
+    2. [D][X] Submit assignment (by: 2025-02-20)
+    3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
     ____________________________________________________________
 
     ____________________________________________________________
