@@ -1,4 +1,4 @@
-package sparkle;
+package sparkle.task;
 
 public class Task {
   protected String description;

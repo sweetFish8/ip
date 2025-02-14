@@ -92,6 +92,9 @@ public class Sparkle {
             break;
 
           case "deadline":
+            if (details.isEmpty())
+              throw new SparkleException(
+                  SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Deadline");
             String[] deadlineParts = details.split(" /by ", 2);
             if (deadlineParts.length < 2)
               throw new SparkleException(
@@ -101,6 +104,9 @@ public class Sparkle {
             break;
 
           case "event":
+            if (details.isEmpty())
+              throw new SparkleException(
+                  SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Event");
             String[] eventParts = details.split(" /from ", 2);
             if (eventParts.length < 2 || !eventParts[1].contains(" /to ")) {
               throw new SparkleException(

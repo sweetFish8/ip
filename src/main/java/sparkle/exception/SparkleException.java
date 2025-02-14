@@ -25,7 +25,7 @@ public class SparkleException extends Exception {
       case INVALID_FORMAT:
         return details;
       default:
-        return "An unknown error occurred.";
+        return "A little chaos just slipped in—was that your plan?";
     }
   }
 }
