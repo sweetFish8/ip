@@ -71,6 +71,7 @@ public class Sparkle {
         separator + "    Got any cool, daring quests or risky biz? Just hit me up!\n" + separator);
 
     ArrayList<Task> tasks = new ArrayList<>();
+
     try {
       tasks = loadFile();
       System.out.println("    Look at that! Your tasks made it back in one piece—miraculous!");
@@ -258,7 +259,6 @@ public class Sparkle {
           SparkleException.ErrorType.INVALID_FORMAT,
           "That file's playing hide and seek… and winning!");
     }
-    printTaskList(newtasks, newtasks.size());
     return newtasks;
   }
 }
