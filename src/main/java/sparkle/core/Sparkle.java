@@ -1,5 +1,6 @@
 package sparkle.core;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import sparkle.exception.SparkleException;
 import sparkle.task.Deadline;
@@ -57,8 +58,7 @@ public class Sparkle {
     System.out.println(
         separator + "    Got any cool, daring quests or risky biz? Just hit me up!\n" + separator);
 
-    Task[] tasks = new Task[100];
-    int taskCount = 0;
+    ArrayList<Task> tasks = new ArrayList<>();
 
     while (true) {
       try {
@@ -76,19 +76,23 @@ public class Sparkle {
             return;
 
           case "list":
-            printTaskList(tasks, taskCount);
+            printTaskList(tasks);
+            break;
+
+          case "delete":
+            deleteTask(tasks, details);
             break;
 
           case "mark":
           case "unmark":
-            handleMarkTask(tasks, taskCount, details, command.equals("mark"));
+            handleMarkTask(tasks, details, command.equals("mark"));
             break;
 
           case "todo":
             if (details.isEmpty())
               throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
-            tasks[taskCount] = new Todo(details);
-            printAddedTask(tasks[taskCount++], taskCount);
+            tasks.add(new Todo(details));
+            printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
             break;
 
           case "deadline":
@@ -99,8 +103,8 @@ public class Sparkle {
             if (deadlineParts.length < 2)
               throw new SparkleException(
                   SparkleException.ErrorType.INVALID_FORMAT, "Deadline requires a /by time.");
-            tasks[taskCount] = new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim());
-            printAddedTask(tasks[taskCount++], taskCount);
+            tasks.add(new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim()));
+            printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
             break;
 
           case "event":
@@ -113,9 +117,8 @@ public class Sparkle {
                   SparkleException.ErrorType.INVALID_FORMAT, "Event requires /from and /to time.");
             }
             String[] timeParts = eventParts[1].split(" /to ", 2);
-            tasks[taskCount] =
-                new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
-            printAddedTask(tasks[taskCount++], taskCount);
+            tasks.add(new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
+            printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
             break;
 
           default:
@@ -127,36 +130,53 @@ public class Sparkle {
     }
   }
 
-  private static void printTaskList(Task[] tasks, int taskCount) {
+  private static void printTaskList(ArrayList<Task> tasks) {
     System.out.print(separator);
-    if (taskCount == 0) {
+    if (tasks.isEmpty()) {
       System.out.println("    Looks like there's nothing fun to mess with... How boring!");
     } else {
       System.out.println("    Here are the tasks in your list~ ");
-      for (int i = 0; i < taskCount; i++) {
-        System.out.println("    " + (i + 1) + ". " + tasks[i]);
+      for (int i = 0; i < tasks.size(); i++) {
+        System.out.println("    " + (i + 1) + ". " + tasks.get(i));
       }
     }
     System.out.println(separator);
   }
 
-  private static void handleMarkTask(Task[] tasks, int taskCount, String userInput, boolean isMark)
+  private static void handleMarkTask(ArrayList<Task> tasks, String userInput, boolean isMark)
       throws SparkleException {
     try {
       int taskNumber = Integer.parseInt(userInput) - 1;
-      if (taskNumber < 0 || taskNumber >= taskCount) {
+      if (taskNumber < 0 || taskNumber >= tasks.size()) {
         throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
       }
       if (isMark) {
-        tasks[taskNumber].markAsDone();
+        tasks.get(taskNumber).markAsDone();
         System.out.print(separator);
         System.out.println("    Boom! Task's done and dusted~");
       } else {
-        tasks[taskNumber].markAsUndone();
+        tasks.get(taskNumber).markAsUndone();
         System.out.print(separator);
         System.out.println("    Not done yet, but it's still on the radar!");
       }
-      System.out.println("    " + tasks[taskNumber]);
+      System.out.println("    " + tasks.get(taskNumber));
+      System.out.println(separator);
+    } catch (NumberFormatException e) {
+      throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
+    }
+  }
+
+  private static void deleteTask(ArrayList<Task> tasks, String userInput) throws SparkleException {
+    try {
+      int taskNumber = Integer.parseInt(userInput) - 1;
+      if (taskNumber < 0 || taskNumber >= tasks.size()) {
+        throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
+      }
+      Task removedTask = tasks.remove(taskNumber);
+      System.out.print(separator);
+      System.out.println("    Noted. I've removed this task:");
+      System.out.println("      " + removedTask);
+      System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
       System.out.println(separator);
     } catch (NumberFormatException e) {
       throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
