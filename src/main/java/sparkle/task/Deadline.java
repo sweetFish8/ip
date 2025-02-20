@@ -17,7 +17,7 @@ public class Deadline extends Task {
 
   @Override
   public String toFileFormat() {
-    return "D | " + super.toFileFormat();
+    return "D | " + super.toFileFormat() + " | " + by;
   }
 
   public static Deadline fromFileFormat(String[] parts) throws SparkleException {

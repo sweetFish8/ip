@@ -71,6 +71,12 @@ public class Sparkle {
         separator + "    Got any cool, daring quests or risky biz? Just hit me up!\n" + separator);
 
     ArrayList<Task> tasks = new ArrayList<>();
+    try {
+      tasks = loadFile();
+      System.out.println("    Tasks loaded successfully!");
+    } catch (SparkleException e) {
+      System.out.println("    Failed to load tasks: " + e.getMessage());
+    }
 
     while (true) {
       try {
@@ -81,6 +87,7 @@ public class Sparkle {
 
         switch (command) {
           case "bye":
+            saveTasks();
             System.out.print(separator);
             System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
             System.out.println(separator);
@@ -140,7 +147,7 @@ public class Sparkle {
             break;
 
           case "delete":
-            deleteTask(details);
+            deleteTask(tasks, details);
             saveTasks();
             break;
 
@@ -148,7 +155,9 @@ public class Sparkle {
             throw new SparkleException(SparkleException.ErrorType.UNKNOWN_COMMAND, command);
         }
       } catch (SparkleException e) {
+        System.out.println(separator);
         System.out.println(e.getMessage());
+        System.out.println(separator);
       }
     }
   }
@@ -198,7 +207,7 @@ public class Sparkle {
     System.out.println(separator);
   }
 
-  private void deleteTask(String userInput) throws SparkleException {
+  private static void deleteTask(ArrayList<Task> tasks, String userInput) throws SparkleException {
     try {
       int taskNumber = Integer.parseInt(userInput) - 1;
       if (taskNumber < 0 || taskNumber >= tasks.size()) {
@@ -208,7 +217,7 @@ public class Sparkle {
       System.out.print(separator);
       System.out.println("    Got it! Poof! This task is gone:");
       System.out.println("      " + removedTask);
-      System.out.println("    Look at that! You’ve got " + tasks.size() + " tasks left to juggle!");
+      System.out.println("    Look at that! You've got " + tasks.size() + " tasks left to juggle!");
       System.out.println(separator);
     } catch (NumberFormatException e) {
       throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
@@ -228,26 +237,26 @@ public class Sparkle {
     }
   }
 
-  public static List<Task> loadFile() throws SparkleException {
-    List<Task> tasks = new ArrayList<>();
+  public static ArrayList<Task> loadFile() throws SparkleException {
+    ArrayList<Task> newtasks = new ArrayList<>();
     File file = new File(FILE_PATH);
 
     if (!file.exists()) {
-      return tasks;
+      return newtasks;
     }
 
     try (Scanner scanner = new Scanner(file)) {
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
         String[] parts = line.split(" \\| ");
-        tasks.add(Task.fromFileFormat(parts));
+        newtasks.add(Task.fromFileFormat(parts));
       }
     } catch (FileNotFoundException e) {
       throw new SparkleException(
           SparkleException.ErrorType.INVALID_FORMAT,
           "That file's playing hide and seek… and winning!");
     }
-
-    return tasks;
+    printTaskList(newtasks, newtasks.size());
+    return newtasks;
   }
 }

@@ -33,14 +33,20 @@ public class Task {
   }
 
   public static Task fromFileFormat(String[] parts) throws SparkleException {
-    if (parts.length < 2) {
-      throw new SparkleException(SparkleException.ErrorType.INVALID_FORMAT, "Corrupted Task data");
+    char type = parts[0].charAt(0);
+
+    switch (type) {
+      case 'T':
+        return Todo.fromFileFormat(parts);
+      case 'D':
+        return Deadline.fromFileFormat(parts);
+      case 'E':
+        return Event.fromFileFormat(parts);
+      default:
+        throw new SparkleException(
+            SparkleException.ErrorType.INVALID_FORMAT,
+            "Oops! This task data's a mess—good luck fixing that!");
     }
-
-    boolean isDone = parts[0].equals("1");
-    String description = parts[1];
-
-    return new Task(description, isDone);
   }
 
   @Override
