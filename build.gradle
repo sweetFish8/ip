@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'application' 
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+application {
+    mainClass = "sparkle.core.Sparkle"
+}
+
+shadowJar {
+    archiveFileName = 'sparkle.jar'
+}
