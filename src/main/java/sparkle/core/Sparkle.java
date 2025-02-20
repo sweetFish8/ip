@@ -73,10 +73,12 @@ public class Sparkle {
     ArrayList<Task> tasks = new ArrayList<>();
     try {
       tasks = loadFile();
-      System.out.println("    Tasks loaded successfully!");
+      System.out.println("    Look at that! Your tasks made it back in one piece—miraculous!");
     } catch (SparkleException e) {
-      System.out.println("    Failed to load tasks: " + e.getMessage());
+      System.out.println("    Your tasks took a wrong turn and got lost...Tragic!");
+      System.out.println(e.getMessage());
     }
+    System.out.println(separator);
 
     while (true) {
       try {
