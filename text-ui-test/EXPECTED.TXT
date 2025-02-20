@@ -1,7 +1,6 @@
     ____________________________________________________________
     Hey hey, I'm Sparkle!
     ____________________________________________________________
-
 NNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNN
 NMNNMHXXyVVyyHqqqqkHHmWggH4k<<>>>>??1C?Tz111lOwXWMHgHMM@@@@@@@@NXMNNMN
 NNMMSZXUUU0VOIWHkkkkkkHHHlXH2<;;;<<+J~..uvx1zZUWHMHHHMMM@@@@@@@@NXMMNN
@@ -54,21 +53,15 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     Looks like you've got 2 tasks in your list~ Better get moving!
     ____________________________________________________________
 
-    ____________________________________________________________
-    Whoops! Todo has nothing in the description!
+    Todo has nothing in the description!
     At least give me some fireworks to set off...
-    ____________________________________________________________
-
     ____________________________________________________________
     Let's make it fun! I've added this task:
       [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
     Looks like you've got 3 tasks in your list~ Better get moving!
     ____________________________________________________________
 
-    ____________________________________________________________
-    Whoops! Event requires /from and /to time.
-    ____________________________________________________________
-
+    Event requires /from and /to time.
     ____________________________________________________________
     Here are the tasks in your list~ 
     1. [T][ ] Buy groceries
@@ -77,19 +70,16 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     ____________________________________________________________
 
     ____________________________________________________________
-    Boom! Task's done and dusted~
+    Task updated!
     [T][X] Buy groceries
     ____________________________________________________________
 
     ____________________________________________________________
-    Boom! Task's done and dusted~
+    Task updated!
     [D][X] Submit assignment (by: 2025-02-20)
     ____________________________________________________________
 
-    ____________________________________________________________
-    Whoops! That task number's playing hide and seek~ Try again!
-    ____________________________________________________________
-
+    That task number's playing hide and seek~ Try again!
     ____________________________________________________________
     Here are the tasks in your list~ 
     1. [T][X] Buy groceries
@@ -98,7 +88,7 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     ____________________________________________________________
 
     ____________________________________________________________
-    Not done yet, but it's still on the radar!
+    Task updated!
     [T][ ] Buy groceries
     ____________________________________________________________
 
@@ -109,16 +99,18 @@ NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN
     3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
     ____________________________________________________________
 
-    ____________________________________________________________
-    Whoops! add? Huh? That's just noise!
+    add? Huh? That's just noise!
     Say something that actually makes sense~
+    ____________________________________________________________
+    Noted. I've removed this task:
+      [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
+    Now you have 2 tasks in the list.
     ____________________________________________________________
 
     ____________________________________________________________
     Here are the tasks in your list~ 
     1. [T][ ] Buy groceries
     2. [D][X] Submit assignment (by: 2025-02-20)
-    3. [E][ ] Meeting (from: 2025-02-15 10:00 to: 2025-02-15 12:00)
     ____________________________________________________________
 
     ____________________________________________________________

@@ -1,6 +1,12 @@
 package sparkle.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import sparkle.exception.SparkleException;
 import sparkle.task.Deadline;
@@ -10,7 +16,7 @@ import sparkle.task.Todo;
 
 public class Sparkle {
 
-  static String logo =
+  private static String logo =
       "NNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNN\n"
           + "NMNNMHXXyVVyyHqqqqkHHmWggH4k<<>>>>??1C?Tz111lOwXWMHgHMM@@@@@@@@NXMNNMN\n"
           + "NNMMSZXUUU0VOIWHkkkkkkHHHlXH2<;;;<<+J~..uvx1zZUWHMHHHMMM@@@@@@@@NXMMNN\n"
@@ -48,13 +54,19 @@ public class Sparkle {
           + "NMNmkyd@HZXHkHww$``````.Wz7Iv!`.J=?TYY>:<~``` ..`` JHWHWHpVWIdHsvXqNMN\n"
           + "NNNNNkdMHXXHWH2uC```````jL```.JY` -_~~`````` -`.``.HmHHfpWWWRdWVwW#NNN\n"
           + "NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN";
-  static String separator = "    ____________________________________________________________\n";
+  private static final String FILE_PATH = "./data/sparkle.txt";
+  private static final String DIRECTORY_PATH = "./data";
+  private static final String separator =
+      "    ____________________________________________________________\n";
+  private List<Task> tasks = new ArrayList<>();
 
   public static void main(String[] args) {
+    new Sparkle().run();
+  }
+
+  private void run() {
     Scanner scanner = new Scanner(System.in);
-
-    System.out.println(separator + "    Hey hey, I'm Sparkle!\n" + separator + "\n" + logo);
-
+    System.out.println(separator + "    Hey hey, I'm Sparkle!\n" + separator + logo);
     System.out.println(
         separator + "    Got any cool, daring quests or risky biz? Just hit me up!\n" + separator);
 
@@ -76,16 +88,16 @@ public class Sparkle {
             return;
 
           case "list":
-            printTaskList(tasks);
-            break;
-
-          case "delete":
-            deleteTask(tasks, details);
+            printTaskList(tasks, tasks.size());
             break;
 
           case "mark":
+            handleMarkTask(tasks, details, command.equals("mark"));
+            saveTasks();
+            break;
           case "unmark":
             handleMarkTask(tasks, details, command.equals("mark"));
+            saveTasks();
             break;
 
           case "todo":
@@ -93,6 +105,7 @@ public class Sparkle {
               throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
             tasks.add(new Todo(details));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
+            saveTasks();
             break;
 
           case "deadline":
@@ -102,9 +115,11 @@ public class Sparkle {
             String[] deadlineParts = details.split(" /by ", 2);
             if (deadlineParts.length < 2)
               throw new SparkleException(
-                  SparkleException.ErrorType.INVALID_FORMAT, "Deadline requires a /by time.");
+                  SparkleException.ErrorType.INVALID_FORMAT,
+                  "Need a /by time! Or do you plan to finish it... never?");
             tasks.add(new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim()));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
+            saveTasks();
             break;
 
           case "event":
@@ -114,25 +129,33 @@ public class Sparkle {
             String[] eventParts = details.split(" /from ", 2);
             if (eventParts.length < 2 || !eventParts[1].contains(" /to ")) {
               throw new SparkleException(
-                  SparkleException.ErrorType.INVALID_FORMAT, "Event requires /from and /to time.");
+                  SparkleException.ErrorType.INVALID_FORMAT,
+                  "Oops! You forgot the time slots! Gotta add both /from and /to, or this show"
+                      + " ain't starting!");
             }
             String[] timeParts = eventParts[1].split(" /to ", 2);
             tasks.add(new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
+            saveTasks();
+            break;
+
+          case "delete":
+            deleteTask(details);
+            saveTasks();
             break;
 
           default:
             throw new SparkleException(SparkleException.ErrorType.UNKNOWN_COMMAND, command);
         }
       } catch (SparkleException e) {
-        printErrorMessage(e.getMessage());
+        System.out.println(e.getMessage());
       }
     }
   }
 
-  private static void printTaskList(ArrayList<Task> tasks) {
+  private static void printTaskList(ArrayList<Task> tasks, int taskCount) {
     System.out.print(separator);
-    if (tasks.isEmpty()) {
+    if (taskCount == 0) {
       System.out.println("    Looks like there's nothing fun to mess with... How boring!");
     } else {
       System.out.println("    Here are the tasks in your list~ ");
@@ -166,23 +189,6 @@ public class Sparkle {
     }
   }
 
-  private static void deleteTask(ArrayList<Task> tasks, String userInput) throws SparkleException {
-    try {
-      int taskNumber = Integer.parseInt(userInput) - 1;
-      if (taskNumber < 0 || taskNumber >= tasks.size()) {
-        throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
-      }
-      Task removedTask = tasks.remove(taskNumber);
-      System.out.print(separator);
-      System.out.println("    Noted. I've removed this task:");
-      System.out.println("      " + removedTask);
-      System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
-      System.out.println(separator);
-    } catch (NumberFormatException e) {
-      throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
-    }
-  }
-
   private static void printAddedTask(Task task, int taskCount) {
     System.out.print(separator);
     System.out.println("    Let's make it fun! I've added this task:");
@@ -192,9 +198,56 @@ public class Sparkle {
     System.out.println(separator);
   }
 
-  private static void printErrorMessage(String message) {
-    System.out.print(separator);
-    System.out.println("    Whoops! " + message);
-    System.out.println(separator);
+  private void deleteTask(String userInput) throws SparkleException {
+    try {
+      int taskNumber = Integer.parseInt(userInput) - 1;
+      if (taskNumber < 0 || taskNumber >= tasks.size()) {
+        throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
+      }
+      Task removedTask = tasks.remove(taskNumber);
+      System.out.print(separator);
+      System.out.println("    Got it! Poof! This task is gone:");
+      System.out.println("      " + removedTask);
+      System.out.println("    Look at that! You’ve got " + tasks.size() + " tasks left to juggle!");
+      System.out.println(separator);
+    } catch (NumberFormatException e) {
+      throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
+    }
+  }
+
+  private void saveTasks() {
+    try {
+      new File(DIRECTORY_PATH).mkdirs();
+      BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
+      for (Task task : tasks) {
+        writer.write(task.toFileFormat() + "\n");
+      }
+      writer.close();
+    } catch (IOException e) {
+      System.out.println("    Task list just went poof! Try saving again!s");
+    }
+  }
+
+  public static List<Task> loadFile() throws SparkleException {
+    List<Task> tasks = new ArrayList<>();
+    File file = new File(FILE_PATH);
+
+    if (!file.exists()) {
+      return tasks;
+    }
+
+    try (Scanner scanner = new Scanner(file)) {
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] parts = line.split(" \\| ");
+        tasks.add(Task.fromFileFormat(parts));
+      }
+    } catch (FileNotFoundException e) {
+      throw new SparkleException(
+          SparkleException.ErrorType.INVALID_FORMAT,
+          "That file's playing hide and seek… and winning!");
+    }
+
+    return tasks;
   }
 }
