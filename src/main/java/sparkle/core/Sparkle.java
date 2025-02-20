@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import sparkle.exception.SparkleException;
 import sparkle.task.Deadline;
@@ -54,11 +53,12 @@ public class Sparkle {
           + "NMNmkyd@HZXHkHww$``````.Wz7Iv!`.J=?TYY>:<~``` ..`` JHWHWHpVWIdHsvXqNMN\n"
           + "NNNNNkdMHXXHWH2uC```````jL```.JY` -_~~`````` -`.``.HmHHfpWWWRdWVwW#NNN\n"
           + "NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN";
-  private static final String FILE_PATH = "./data/sparkle.txt";
-  private static final String DIRECTORY_PATH = "./data";
+
+  private static final String FILE_PATH = "../data/sparkle.txt";
+  private static final String DIRECTORY_PATH = "../data";
+
   private static final String separator =
       "    ____________________________________________________________\n";
-  private List<Task> tasks = new ArrayList<>();
 
   public static void main(String[] args) {
     new Sparkle().run();
@@ -87,7 +87,7 @@ public class Sparkle {
 
         switch (command) {
           case "bye":
-            saveTasks();
+            saveTasks(tasks);
             System.out.print(separator);
             System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
             System.out.println(separator);
@@ -100,11 +100,11 @@ public class Sparkle {
 
           case "mark":
             handleMarkTask(tasks, details, command.equals("mark"));
-            saveTasks();
+            saveTasks(tasks);
             break;
           case "unmark":
             handleMarkTask(tasks, details, command.equals("mark"));
-            saveTasks();
+            saveTasks(tasks);
             break;
 
           case "todo":
@@ -112,7 +112,7 @@ public class Sparkle {
               throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
             tasks.add(new Todo(details));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
-            saveTasks();
+            saveTasks(tasks);
             break;
 
           case "deadline":
@@ -126,7 +126,7 @@ public class Sparkle {
                   "Need a /by time! Or do you plan to finish it... never?");
             tasks.add(new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim()));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
-            saveTasks();
+            saveTasks(tasks);
             break;
 
           case "event":
@@ -143,12 +143,12 @@ public class Sparkle {
             String[] timeParts = eventParts[1].split(" /to ", 2);
             tasks.add(new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
             printAddedTask(tasks.get(tasks.size() - 1), tasks.size());
-            saveTasks();
+            saveTasks(tasks);
             break;
 
           case "delete":
             deleteTask(tasks, details);
-            saveTasks();
+            saveTasks(tasks);
             break;
 
           default:
@@ -224,7 +224,7 @@ public class Sparkle {
     }
   }
 
-  private void saveTasks() {
+  private void saveTasks(ArrayList<Task> tasks) {
     try {
       new File(DIRECTORY_PATH).mkdirs();
       BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));

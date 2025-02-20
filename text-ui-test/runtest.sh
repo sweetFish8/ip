@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Move to the script directory (text-ui-test/)
+cd "$(dirname "$0")" || exit 1
+
 # create bin directory if it doesn't exist
 if [ ! -d "../bin" ]
 then
