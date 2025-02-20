@@ -16,16 +16,19 @@ public class SparkleException extends Exception {
   private static String generateMessage(ErrorType type, String details) {
     switch (type) {
       case EMPTY_TASK_DESCRIPTION:
-        return details
+        return "    "
+            + details
             + " has nothing in the description!\n    At least give me some fireworks to set off...";
       case UNKNOWN_COMMAND:
-        return details + "? Huh? That's just noise!\n    Say something that actually makes sense~";
+        return "    "
+            + details
+            + "? Huh? That's just noise!\n    Say something that actually makes sense~";
       case INVALID_TASK_NUMBER:
-        return "That task number's playing hide and seek~ Try again!";
+        return "    That task number's playing hide and seek~ Try again!";
       case INVALID_FORMAT:
-        return details;
+        return "    " + details;
       default:
-        return "A little chaos just slipped in—was that your plan?";
+        return "     A little chaos just slipped in—was that your plan?";
     }
   }
 }

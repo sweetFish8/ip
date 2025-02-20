@@ -1,0 +1,2 @@
+T | 0 | Buy groceries
+D | 1 | Submit assignment
