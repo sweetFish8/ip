@@ -54,8 +54,8 @@ public class Sparkle {
           + "NNNNNkdMHXXHWH2uC```````jL```.JY` -_~~`````` -`.``.HmHHfpWWWRdWVwW#NNN\n"
           + "NMNNNNmQmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdNNNMN";
 
-  private static final String FILE_PATH = "../data/sparkle.txt";
-  private static final String DIRECTORY_PATH = "../data";
+  private static final String FILE_PATH = "./data/sparkle.txt";
+  private static final String DIRECTORY_PATH = "./data";
 
   private static final String separator =
       "    ____________________________________________________________\n";
