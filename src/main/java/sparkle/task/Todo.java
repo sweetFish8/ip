@@ -18,7 +18,7 @@ public class Todo extends Task {
 
   public static Todo fromFileFormat(String[] parts) throws SparkleException {
     if (parts.length < 3) {
-      throw new SparkleException(SparkleException.ErrorType.INVALID_FORMAT, "Oops! Your todo data is a total mess!");
+      throw new SparkleException(SparkleException.ErrorType.INVALID_FORMAT, "Corrupted Todo data");
     }
     return new Todo(parts[2], parts[1].equals("1"));
   }
