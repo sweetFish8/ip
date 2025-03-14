@@ -7,7 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents an event with a start time and end time.
+ * Represents a deadline task that has a specified deadline time. Inherits from the Task class and
+ * includes functionality for handling start and end times
  */
 public class Event extends Task {
 
