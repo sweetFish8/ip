@@ -46,16 +46,14 @@ public class Task {
     return (isDone ? "X" : " ");
   }
 
-  /**
-   * Marks the task as done.
-   */
+  public String getDescription() {
+    return description;
+  }
+
   public void markAsDone() {
     this.isDone = true;
   }
 
-  /**
-   * Marks the task as undone.
-   */
   public void markAsUndone() {
     this.isDone = false;
   }
