@@ -8,12 +8,25 @@ import sparkle.exception.SparkleException;
 
 import java.util.Scanner;
 
+/**
+ * This class represents the main logic of the Sparkle application, which
+ * manages tasks.
+ * It interacts with the user, processes commands, and updates the task list
+ * accordingly.
+ */
 public class Sparkle {
 
   private Ui ui;
   private Storage storage;
   private TaskList tasks;
 
+  /**
+   * Initializes the Sparkle application with the given file path.
+   * It sets up the UI, storage, and loads the task list from the specified file.
+   * If loading the tasks fails, it initializes an empty task list.
+   *
+   * @param filePath The file path to load the tasks from.
+   */
   public Sparkle(String filePath) {
     ui = new Ui();
     storage = new Storage();
@@ -27,6 +40,12 @@ public class Sparkle {
     }
   }
 
+  /**
+   * Runs the Sparkle application, continuously accepting user input, processing
+   * commands,
+   * and displaying relevant information. The application exits when the user
+   * types the "bye" command.
+   */
   public void run() {
     ui.showLogo();
     ui.showGreeting();
@@ -106,6 +125,13 @@ public class Sparkle {
     }
   }
 
+  /**
+   * The entry point of the Sparkle application. It initializes the application
+   * with the file path
+   * and starts the application by calling the `run()` method.
+   *
+   * @param args Command-line arguments (not used).
+   */
   public static void main(String[] args) {
     new Sparkle("data/sparkle.txt").run();
   }
