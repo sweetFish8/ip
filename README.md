@@ -1,26 +1,150 @@
-# Duke project template
+# Sparkle User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+![Sparkle User Guide Image](https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/02/25/127094529/00a75fdab753a244ab93b56d7a53819e_1128020071342605456.png?x-oss-process=image%2Fformat%2Cwebp)
 
-## Setting up in Intellij
+## Introduction
+Sparkle is a task management chatbot that helps you keep track of your tasks in a fun and interactive way!
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## Features
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+### Adding ToDos
+You can add a todo task using the following command:
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+**Command:** `todo TASK_NAME`
+
+**Example:**
+```
+todo Read a book
+```
+
+**Expected Output:**
+```
+    Let's make it fun! I've added this task:
+      [T][ ] Read a book
+    Looks like you've got X tasks in your list~ Better get moving!
+```
+
+### Adding Deadlines
+You can add a deadline task using the following command:
+
+**Command:** `deadline TASK_NAME /by DEADLINE`
+
+**Example:**
+```
+deadline Submit assignment /by Sunday 11:59PM
+```
+
+**Expected Output:**
+```
+    Let's make it fun! I've added this task:
+      [D][ ] Submit assignment (by: Sunday 11:59PM)
+    Looks like you've got X tasks in your list~ Better get moving!
+```
+
+### Adding Events
+You can add an event task using the following command:
+
+**Command:** `event TASK_NAME /from START_TIME /to END_TIME`
+
+**Example:**
+```
+event Team meeting /from Monday 2PM /to Monday 4PM
+```
+
+**Expected Output:**
+```
+    Let's make it fun! I've added this task:
+      [E][ ] Team meeting (from: Monday 2PM to: Monday 4PM)
+    Looks like you've got X tasks in your list~ Better get moving!
+```
+
+### Listing Tasks
+You can view all your tasks by using:
+
+**Command:** `list`
+
+**Expected Output:**
+```
+    Here are the tasks in your list~
+    1. [T][ ] Read a book
+    2. [D][ ] Submit assignment (by: Sunday 11:59PM)
+    3. [E][ ] Team meeting (from: Monday 2PM to: Monday 4PM)
+```
+
+### Marking a Task as Done
+You can mark a task as done using:
+
+**Command:** `mark TASK_NUMBER`
+
+**Example:**
+```
+mark 1
+```
+
+**Expected Output:**
+```
+    Boom! Task's done and dusted~
+      [T][X] Read a book
+```
+
+### Unmarking a Task
+You can unmark a task using:
+
+**Command:** `unmark TASK_NUMBER`
+
+**Example:**
+```
+unmark 1
+```
+
+**Expected Output:**
+```
+    Not done yet, but it's still on the radar!
+      [T][ ] Read a book
+```
+
+### Finding Tasks
+You can search for tasks that match a specific keyword using the following command:
+
+**Command:** `find KEYWORD`
+
+**Example:**
+```
+find assignment
+```
+**Expected Output:**
+```
+    Here are the tasks that match your search~
+    1. [D][ ] Submit assignment (by: Sunday 11:59PM)
+
+```
+
+
+### Deleting a Task
+You can delete a task using:
+
+**Command:** `delete TASK_NUMBER`
+
+**Example:**
+```
+delete 2
+```
+
+**Expected Output:**
+```
+    Got it! Poof! This task is gone:
+      [D][ ] Submit assignment (by: Sunday 11:59PM)
+    Look at that! You've got X tasks left to juggle!
+```
+
+### Exiting Sparkle
+You can exit the program using:
+
+**Command:** `bye`
+
+**Expected Output:**
+```
+    See you around, Stelle~ Try to stay out of trouble next time!
+```
+
+**Enjoy using Sparkle!**
