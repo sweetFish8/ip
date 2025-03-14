@@ -4,7 +4,6 @@ import sparkle.exception.SparkleException;
 import java.util.ArrayList;
 import sparkle.task.Task;
 
-
 public class TaskList {
 
     private ArrayList<Task> tasks;
@@ -21,11 +20,13 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public void deleteTask(int taskNumber) throws SparkleException {
+    public Task deleteTask(int taskNumber) throws SparkleException {
         if (taskNumber < 0 || taskNumber >= tasks.size()) {
             throw new SparkleException(SparkleException.ErrorType.INVALID_TASK_NUMBER, "");
         }
+        Task deleteTask = tasks.get(taskNumber);
         tasks.remove(taskNumber);
+        return deleteTask;
     }
 
     public void markTaskAsDone(int taskNumber) throws SparkleException {

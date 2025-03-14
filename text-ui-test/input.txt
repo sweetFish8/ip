@@ -1,3 +1,4 @@
+list
 todo Buy groceries
 deadline Submit assignment /by 2025-02-20
 todo
