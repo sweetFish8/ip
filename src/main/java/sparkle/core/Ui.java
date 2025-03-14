@@ -106,6 +106,23 @@ public class Ui {
         System.out.println(separator);
     }
 
+    public void showMatchingTasks(ArrayList<Task> matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            System.out.println(separator);
+            System.out.println("    Nothing here! Did you imagine it?");
+            System.out.println(separator);
+        } else {
+            System.out.println(separator);
+            System.out.println("    Look what we've got! Your matching tasks:");
+            int index = 1;
+            for (Task task : matchingTasks) {
+                System.out.println("    " + index + ". " + task);
+                index++;
+            }
+            System.out.println(separator);
+        }
+    }
+
     public void showError(SparkleException e) {
         System.out.println(separator);
         System.out.println(e.getMessage());

@@ -6,6 +6,7 @@ import sparkle.task.Task;
 import sparkle.task.Todo;
 import sparkle.exception.SparkleException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sparkle {
@@ -93,6 +94,14 @@ public class Sparkle {
               int taskToDelete = Integer.parseInt(details) - 1;
               Task removedTask = tasks.deleteTask(taskToDelete);
               ui.showTaskDeleted(removedTask, tasks.size());
+              break;
+            case "find":
+              if (details.isEmpty()) {
+                throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Find");
+              }
+              // findコマンドに基づき、キーワードでタスクを検索
+              ArrayList<Task> matchingTasks = tasks.findTasks(details);
+              ui.showMatchingTasks(matchingTasks);
               break;
             default:
               throw new SparkleException(SparkleException.ErrorType.UNKNOWN_COMMAND, command);
