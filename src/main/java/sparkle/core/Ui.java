@@ -165,4 +165,26 @@ public class Ui {
     System.out.println("    See you around, Stelle~ Try to stay out of trouble next time!");
     System.out.println(separator);
   }
+
+/**
+ * Displays tasks that match a search query.
+ *
+ * @param matchingTasks The list of tasks that match the search criteria.
+ */
+  public void showMatchingTasks(ArrayList<Task> matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            System.out.println(separator);
+            System.out.println("    Nothing here! Did you imagine it?");
+            System.out.println(separator);
+        } else {
+            System.out.println(separator);
+            System.out.println("    Look what we've got! Your matching tasks:");
+            int index = 1;
+            for (Task task : matchingTasks) {
+                System.out.println("    " + index + ". " + task);
+                index++;
+            }
+            System.out.println(separator);
+        }
+    }
 }

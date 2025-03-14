@@ -91,7 +91,22 @@ public class TaskList {
    *
    * @return The number of tasks.
    */
-  public int size() {
-    return tasks.size();
-  }
+
+    public ArrayList<Task> findTasks(String keyword) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+ 　/**
+   * Returns the number of tasks in the list.
+   *
+   * @return The number of tasks.
+   */
+    public int size() {
+        return tasks.size();
+    }
 }

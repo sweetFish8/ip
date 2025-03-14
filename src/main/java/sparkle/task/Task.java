@@ -3,18 +3,19 @@ package sparkle.task;
 import sparkle.exception.SparkleException;
 
 /**
- * Represents a task with a description and completion status. This class provides functionality for
- * marking a task as done or undone, converting it to and from a file format, and retrieving the
- * task's string representation.
+ * Represents a task with a description and completion status.
+ * This class provides functionality for marking a task as done or undone,
+ * converting it to and from a file format, and retrieving the task's string
+ * representation.
  */
 public class Task {
   protected String description;
   protected boolean isDone;
 
   /**
-   * Constructs a Task object with the specified description. The task is initially marked as not
-   * done.
-   *
+   * Constructs a Task object with the specified description.
+   * The task is initially marked as not done.
+   * 
    * @param description A brief description of the task.
    */
   public Task(String description) {
@@ -23,10 +24,11 @@ public class Task {
   }
 
   /**
-   * Constructs a Task object with the specified description and completion status.
-   *
+   * Constructs a Task object with the specified description and completion
+   * status.
+   * 
    * @param description A brief description of the task.
-   * @param isDone A boolean indicating whether the task is marked as done.
+   * @param isDone      A boolean indicating whether the task is marked as done.
    */
   public Task(String description, boolean isDone) {
     this.description = description;
@@ -34,12 +36,18 @@ public class Task {
   }
 
   /**
-   * Returns the status icon of the task, representing whether the task is done or not.
-   *
-   * @return A string representing the task's completion status ("X" for done, " " for undone).
+   * Returns the status icon of the task, representing whether the task is done or
+   * not.
+   * 
+   * @return A string representing the task's completion status ("X" for done, " "
+   *         for undone).
    */
   public String getStatusIcon() {
     return (isDone ? "X" : " ");
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public void markAsDone() {
@@ -52,7 +60,7 @@ public class Task {
 
   /**
    * Converts the Task object into a string format suitable for saving to a file.
-   *
+   * 
    * @return A string representation of the task in a format suitable for storage.
    */
   public String toFileFormat() {
@@ -61,8 +69,9 @@ public class Task {
 
   /**
    * Creates a Task object from a string array formatted for file loading.
-   *
-   * @param parts A string array containing task data in the format [type, done, description].
+   * 
+   * @param parts A string array containing task data in the format [type, done,
+   *              description].
    * @return A Task object initialized with the data from the array.
    * @throws SparkleException If the input data is in an invalid format.
    */
@@ -84,9 +93,11 @@ public class Task {
   }
 
   /**
-   * Returns a string representation of the task, including its status and description.
-   *
-   * @return A string representation of the task in the format "[status] description".
+   * Returns a string representation of the task, including its status and
+   * description.
+   * 
+   * @return A string representation of the task in the format "[status]
+   *         description".
    */
   @Override
   public String toString() {
