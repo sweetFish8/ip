@@ -1,19 +1,27 @@
 package sparkle.core;
 
+import java.util.Scanner;
+import sparkle.exception.SparkleException;
 import sparkle.task.Deadline;
 import sparkle.task.Event;
 import sparkle.task.Task;
 import sparkle.task.Todo;
-import sparkle.exception.SparkleException;
 
-import java.util.Scanner;
-
+/**
+ * The {@code Sparkle} class represents the main chatbot application. It handles user input, task
+ * management, and interaction with the storage system.
+ */
 public class Sparkle {
 
   private Ui ui;
   private Storage storage;
   private TaskList tasks;
 
+  /**
+   * Initializes the Sparkle chatbot with a given file path for task storage.
+   *
+   * @param filePath The file path where tasks are stored.
+   */
   public Sparkle(String filePath) {
     ui = new Ui();
     storage = new Storage();
@@ -27,6 +35,7 @@ public class Sparkle {
     }
   }
 
+  /** Runs the chatbot, processing user input in a loop until the "bye" command is given. */
   public void run() {
     ui.showLogo();
     ui.showGreeting();
@@ -59,7 +68,8 @@ public class Sparkle {
               break;
             case "todo":
               if (details.isEmpty()) {
-                throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
+                throw new SparkleException(
+                    SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Todo");
               }
               tasks.addTask(new Todo(details));
               ui.showTaskAdded(tasks.getTasks().get(tasks.size() - 1), tasks.size());
@@ -70,7 +80,8 @@ public class Sparkle {
               }
               String[] deadlineParts = details.split(" /by ", 2);
               if (deadlineParts.length < 2) {
-                throw new SparkleException(SparkleException.ErrorType.INVALID_FORMAT,
+                throw new SparkleException(
+                    SparkleException.ErrorType.INVALID_FORMAT,
                     "Need a /by time! Or do you plan to finish it... never?");
               }
               tasks.addTask(new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim()));
@@ -78,15 +89,19 @@ public class Sparkle {
               break;
             case "event":
               if (details.isEmpty()) {
-                throw new SparkleException(SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Event");
+                throw new SparkleException(
+                    SparkleException.ErrorType.EMPTY_TASK_DESCRIPTION, "Event");
               }
               String[] eventParts = details.split(" /from ", 2);
               if (eventParts.length < 2 || !eventParts[1].contains(" /to ")) {
-                throw new SparkleException(SparkleException.ErrorType.INVALID_FORMAT,
-                    "Oops! You forgot the time slots! Gotta add both /from and /to, or this show ain't starting!");
+                throw new SparkleException(
+                    SparkleException.ErrorType.INVALID_FORMAT,
+                    "Oops! You forgot the time slots! Gotta add both /from and /to, or this show"
+                        + " ain't starting!");
               }
               String[] timeParts = eventParts[1].split(" /to ", 2);
-              tasks.addTask(new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
+              tasks.addTask(
+                  new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim()));
               ui.showTaskAdded(tasks.getTasks().get(tasks.size() - 1), tasks.size());
               break;
             case "delete":
@@ -106,6 +121,11 @@ public class Sparkle {
     }
   }
 
+  /**
+   * The main entry point for the Sparkle chatbot.
+   *
+   * @param args Command-line arguments.
+   */
   public static void main(String[] args) {
     new Sparkle("data/sparkle.txt").run();
   }
